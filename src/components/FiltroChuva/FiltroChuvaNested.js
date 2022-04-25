@@ -194,37 +194,41 @@ const DATA = [
   },
 ];
 
-function FiltroChuva() {
+/* function filtersComp(selectedFilters) {
+  return (e, i) => {
+    if (selectedFilters[i].condition === '>') {
+      return Number(e[selectedFilters[i].column]) > Number(selectedFilters[i].value);
+    } if (selectedFilters[i].condition === '=') {
+      return Number(e[selectedFilters[i].column]) === Number(selectedFilters[i].value);
+    } return Number(e[selectedFilters[i].column]) < Number(selectedFilters[i].value);
+  };
+} */
+
+function FiltroChuvaNested() {
   // estado generico para os inputs
   const [selected, setSelected] = useState({
     column: '',
     condition: '',
     value: '',
   });
-  const [nameInput, setNameInput] = useState(''); // nome do input
+
+  // estado para nome das cidades
+  const [cityInput, setNameInput] = useState(''); 
 
   // estado para o array de filtros
+
   const [selectedFilters, setSelectedFilters] = useState([]);
 
-  const tratarDados = (linha) => {
-    const bools = [];
-    selectedFilters.forEach((filter) => {
-      switch (filter.condition) {
-        case '>':
-          bools.push(Number(linha[filter.column]) >= Number(filter.value));
-          break;
-        case '<':
-          bools.push(Number(linha[filter.column]) <= Number(filter.value));
-          break;
-        case '=':
-          bools.push(linha[filter.column] === filter.value.toUpperCase());
-          break;
-        default:
-          return true;
-      }
-    });
-    return bools.every((el) => el);
-  };
+  
+  /* const getFilter = filtersComp(selectedFilters); */
+
+  const treatCondition = (e, i) => {
+    if (selectedFilters[i].condition === '>') {
+      return Number(e[selectedFilters[i].column]) > Number(selectedFilters[i].value);
+    } if (selectedFilters[i].condition === '=') {
+      return Number(e[selectedFilters[i].column]) === Number(selectedFilters[i].value);
+    } return Number(e[selectedFilters[i].column]) < Number(selectedFilters[i].value);
+}
 
   const tratarOpcoes = (opcao) =>
     !selectedFilters.find((filtro) => opcao === filtro.column);
@@ -269,7 +273,7 @@ function FiltroChuva() {
           type="text"
           id=""
           name="cityName"
-          value={nameInput}
+          value={cityInput}
           onChange={ (e) => { setNameInput(e.currentTarget.value); } }
         />
         <button
@@ -299,7 +303,7 @@ function FiltroChuva() {
       </header>
       {selectedFilters
       .map((filter, index) => (
-        <div className="filters" key={index}>
+        <div className="selectedFilters" key={index}>
           <button
             className="limpar"
             onClick={() => {
@@ -325,8 +329,13 @@ function FiltroChuva() {
         </thead>
         <tbody>
           {DATA
-          .filter((planet) => planet.CAPITAL.toLowerCase().includes(nameInput.toLowerCase()))
-          .filter(tratarDados).map((dados) => (
+          .filter((planet) => planet.CAPITAL.toLowerCase().includes(cityInput.toLowerCase()))
+          .filter((e) => (selectedFilters.length > 0 ? (treatCondition(e, 0)) : e))
+          .filter((e) => (selectedFilters.length > 1 ? (treatCondition(e, 1)) : e))
+          .filter((e) => (selectedFilters.length > 2 ? (treatCondition(e, 2)) : e))
+          .filter((e) => (selectedFilters.length > 3 ? (treatCondition(e, 3)) : e))
+          .filter((e) => (selectedFilters.length > 4 ? (treatCondition(e, 4)) : e))
+          .map((dados) => (
             <tr key={dados.CAPITAL}>
               <td>{dados.CAPITAL}</td>
               <td>{dados.TMIN18}</td>
@@ -340,4 +349,4 @@ function FiltroChuva() {
   );
 }
 
-export default FiltroChuva;
+export default FiltroChuvaNested;
