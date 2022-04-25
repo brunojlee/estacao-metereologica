@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/estacao-metereologica/static/css/main.cf71130a.css",
+    "main.js": "/estacao-metereologica/static/js/main.6179d71a.js",
+    "static/js/787.79bb6342.chunk.js": "/estacao-metereologica/static/js/787.79bb6342.chunk.js",
+    "index.html": "/estacao-metereologica/index.html",
+    "main.cf71130a.css.map": "/estacao-metereologica/static/css/main.cf71130a.css.map",
+    "main.6179d71a.js.map": "/estacao-metereologica/static/js/main.6179d71a.js.map",
+    "787.79bb6342.chunk.js.map": "/estacao-metereologica/static/js/787.79bb6342.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.cf71130a.css",
+    "static/js/main.6179d71a.js"
+  ]
+}
